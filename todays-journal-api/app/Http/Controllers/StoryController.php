@@ -21,24 +21,9 @@ class StoryController extends Controller
         // Valid for ListStoriesTest->$response->assertSee(json_structure)
         // return $story;
         // Valid for ListStoriesTest->$response->assertExactJson(json_structure)
-        return response()->json([
-            'data' => [
-                'type' => 'stories',
-                'id' => (string) $story->getRouteKey(),
-                'attributes' => [
-                    'title' => $story->title,
-                    'url' => $story->url,
-                    'content' => $story->content
-                ],
-                'links' => [
-                    'self' => url(route('api.v1.stories.show', $story))
-                ]
-            ]
-        ]);
-        
-        //return response()->json(json_structure);
+        // return response()->json(json_structure);
         // Using Laravel Resources
-        //return StoryResource::make($story);
+        return StoryResource::make($story);
     }
 
 }

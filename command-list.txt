@@ -23,3 +23,9 @@ Create Empty Controller
 -----------------------------------------------------------
 
 php artisan make:controller [Name]Controller
+
+=====================================
+Create Empty Resource
+-----------------------------------------------------------
+
+php artisan make:resource [ModelName]Resource
