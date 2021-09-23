@@ -1,0 +1,12 @@
+=====================================
+Create Model and generate his migration
+-----------------------------------------------------------
+
+php artisan make:model -m Story
+
+=====================================
+Create Model Factory
+-----------------------------------------------------------
+
+php artisan make:factory [ModelName]Factory -m [ModelName]
+
