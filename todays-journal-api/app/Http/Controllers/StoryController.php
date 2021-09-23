@@ -31,10 +31,14 @@ class StoryController extends Controller
                     'content' => $story->content
                 ],
                 'links' => [
-                    'self' => url('/api/v1/stories/'.$story->getRouteKey()) 
+                    'self' => url(route('api.v1.stories.show', $story))
                 ]
             ]
         ]);
+        
+        //return response()->json(json_structure);
+        // Using Laravel Resources
+        //return StoryResource::make($story);
     }
 
 }

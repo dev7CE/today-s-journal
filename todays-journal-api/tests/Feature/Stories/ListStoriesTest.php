@@ -22,7 +22,7 @@ class ListStoriesTest extends TestCase
         // $story = Story::factory()->create();
         $story = factory(Story::class)->create();
 
-        $response = $this->getJson('api/v1/stories/'.$story->getRouteKey())
+        $response = $this->getJson(route('api.v1.stories.show', $story))
             ->dump();
 
         // Basic Test
@@ -38,7 +38,7 @@ class ListStoriesTest extends TestCase
                     'content' => $story->content
                 ],
                 'links' => [
-                    'self' => url('/api/v1/stories/'.$story->getRouteKey()) 
+                    'self' => url(route('api.v1.stories.show', $story)) 
                 ]
             ]
         ]);
