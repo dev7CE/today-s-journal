@@ -16,7 +16,7 @@ class StoryController extends Controller
      * @param  \App\Story  $story
      * @return \Illuminate\Http\Response
      */
-    public function show(Story $story)
+    public function show(Story $story):StoryResource
     {
         // Valid for ListStoriesTest->$response->assertSee(json_structure)
         // return $story;
