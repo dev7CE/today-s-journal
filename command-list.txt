@@ -10,3 +10,16 @@ Create Model Factory
 
 php artisan make:factory [ModelName]Factory -m [ModelName]
 
+=====================================
+Test-driven development (TDD)
+
+Create Model Test 
+-----------------------------------------------------------
+
+php artisan make:test [PluralizedModelName]/[ActionModel]Test
+
+=====================================
+Create Empty Controller
+-----------------------------------------------------------
+
+php artisan make:controller [Name]Controller
