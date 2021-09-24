@@ -38,7 +38,7 @@ class ListStoriesTest extends TestCase
                     'content' => $story->content
                 ],
                 'links' => [
-                    'self' => url(route('api.v1.stories.show', $story)) 
+                    'self' => route('api.v1.stories.show', $story) 
                 ]
             ]
         ]);

@@ -24,8 +24,7 @@ class StoryResource extends JsonResource
                     'content' => $this->resource->content
                 ],
                 'links' => [
-                    'self' => url(route('api.v1.stories.show', $this->resource)) 
-                ]
+                'self' => route('api.v1.stories.show', $this->resource),
             ]
         ];
     }
