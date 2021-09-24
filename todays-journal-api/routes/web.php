@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Only API routes shoul be enabled
+// Route::get('/', function () {
+//     return view('welcome');
+// });
