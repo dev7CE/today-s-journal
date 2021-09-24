@@ -54,6 +54,8 @@ class ListStoriesTest extends TestCase
         $stories = factory(Story::class, 1)->create();
 
         $response = $this->getJson(route('api.v1.stories.index'));
+            // Show JSON output
+            //->dump();
 
         $response->assertExactJson([
             'data' => [

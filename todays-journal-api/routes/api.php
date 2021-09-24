@@ -19,5 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('stories', [StoryController::class, 'index'])
+    ->name('api.v1.stories.index');
 Route::get('stories/{story}', [StoryController::class, 'show'])
     ->name('api.v1.stories.show');
