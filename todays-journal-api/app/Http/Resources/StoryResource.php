@@ -44,4 +44,18 @@ class StoryResource extends JsonResource
             ]
         ];
     }
+
+    /**
+     * Create an HTTP response that represents the object.
+     * THIS IS A JsonResponse OVERWRITTEN FUNCTION.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toResponse($request)
+    {
+        return parent::toResponse($request)->withHeaders([
+            'Location' => route('api.v1.stories.show', $this->resource)
+        ]);
+    }
 }

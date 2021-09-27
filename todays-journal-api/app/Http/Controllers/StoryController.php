@@ -29,6 +29,35 @@ class StoryController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // Return 201 response
+        // return response(null, 201);
+        // Show $request data inputs
+        // dd = Dump and Die 
+        // dd($request->all());
+        // Show attributes data inputs only
+        // dd($request->input('data.attributes'));
+
+        $story = Story::create([
+            // This will fail if request does not 
+            // include all attributes
+            'title' => $request->input('data.attributes.title'),
+            'url' => $request->input('data.attributes.url'),
+            'content' => $request->input('data.attributes.content')
+        ]);
+        
+        // Resource object detects if model 
+        // was recently created, will return 201 code.
+        return StoryResource::make($story);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Story  $story
