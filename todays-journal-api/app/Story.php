@@ -16,11 +16,12 @@ class Story extends Model
     // use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
-     *
+     * The attributes that aren't mass assignable.
+     * An empty array will make all attributes as 
+     * not mass assignable
      * @var array
      */
-    protected $fillable = ['user_id','title', 'url', 'content'];
+    protected $guarded = [];
 
     /**
      * Get the user that owns the story.
