@@ -12,13 +12,28 @@ class ValidateJsonApiHeadersTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Setup the test environment.
+     * THIS IS A JsonResponse OVERWRITTEN FUNCTION
+     * of TestCase 'setUp' function.
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Optionally we can simplify this using
+        // Arrow Functions (available in php 7.4 
+        // or higher).
+        // Route::any('test_route', fn() => 'OK')
+        Route::any('test_route', function() {
+            return 'OK';
+        })->middleware(ValidateJsonApiHeaders::class);
+    }
     /** @test */
     public function accept_header_must_be_present_in_all_request()
     {
-        Route::get('test_route', function() {
-            return 'OK';
-        })->middleware(ValidateJsonApiHeaders::class);
-
         $this->getJson('test_route')->assertStatus(406);
         // With APP_DEBUG=false
         // ->dump();
@@ -32,10 +47,6 @@ class ValidateJsonApiHeadersTest extends TestCase
     /** @test */
     public function content_type_header_must_be_present_in_all_post_request()
     {
-        Route::post('test_route', function() {
-            return 'OK';
-        })->middleware(ValidateJsonApiHeaders::class);
-
         $this->post('test_route',[],[
             'accept' => 'application/vnd.api+json'
         ])->assertStatus(415);
@@ -51,10 +62,6 @@ class ValidateJsonApiHeadersTest extends TestCase
     /** @test */
     public function content_type_header_must_be_present_in_all_patch_request()
     {
-        Route::patch('test_route', function() {
-            return 'OK';
-        })->middleware(ValidateJsonApiHeaders::class);
-
         $this->patch('test_route',[],[
             'accept' => 'application/vnd.api+json'
         ])->assertStatus(415);
@@ -70,10 +77,6 @@ class ValidateJsonApiHeadersTest extends TestCase
     /** @test */
     public function content_type_header_must_be_present_in_responses()
     {
-        Route::any('test_route', function() {
-            return 'OK';
-        })->middleware(ValidateJsonApiHeaders::class);
-
         $this->get('test_route',[
             'accept' => 'application/vnd.api+json'
         ])->assertHeader('content-type', 'application/vnd.api+json');
