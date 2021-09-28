@@ -31,10 +31,11 @@ class ValidateJsonApiHeadersTest extends TestCase
             return 'OK';
         })->middleware(ValidateJsonApiHeaders::class);
     }
+    
     /** @test */
     public function accept_header_must_be_present_in_all_request()
     {
-        $this->getJson('test_route')->assertStatus(406);
+        $this->get('test_route')->assertStatus(406);
         // With APP_DEBUG=false
         // ->dump();
         // 406: HTTP_NOT_ACCEPTABLE
