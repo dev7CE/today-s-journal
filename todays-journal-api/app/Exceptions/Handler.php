@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -51,5 +52,38 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Convert a validation exception into a JSON response.
+     * THIS IS A \Illuminate\Foundation\Exceptions\Handler 
+     * OVERWRITTEN FUNCTION.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Validation\ValidationException  $exception
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function invalidJson($request, ValidationException $exception)
+    {   
+        // Display error validation messages
+        // dd($exception->errors());
+        // Display de exception main title
+        // dd($exception->getMessage());
+        $title = $exception->getMessage();
+        
+        $errors = [];
+        foreach ($exception->errors() as $field => $message) {
+            $pointer = "/".str_replace('.', '/', $field);
+
+            $errors [] = [
+                'title' => $title,
+                'detail' => $message[0],
+                'source' => [
+                    'pointer' => $pointer
+                ]
+            ];
+        }
+
+        return response()->json([ 'errors' => $errors ], 422);
     }
 }

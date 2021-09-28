@@ -86,7 +86,16 @@ class CreateStoryTest extends TestCase
         //->dump();
 
         // Basic Error Validation Testing (without JSON:API spec)
-        $response->assertJsonValidationErrors('data.attributes.title');
+        //$response->assertJsonValidationErrors('data.attributes.title');
+
+        $response->assertJsonStructure([
+            'errors' => [
+                ['title', 'detail', 'source' => ['pointer']]
+            ]
+        ]);
+        $response->assertStatus(422);
+        //Code 422 = HTTP_UNPROCESSABLE_ENTITY
+        $response->assertHeader('content-type', 'application/vnd.api+json');
     }
     
     /** @test */
@@ -109,7 +118,16 @@ class CreateStoryTest extends TestCase
         //->dump();
 
         // Basic Error Validation Testing (without JSON:API spec)
-        $response->assertJsonValidationErrors('data.attributes.title');
+        //$response->assertJsonValidationErrors('data.attributes.title');
+
+        $response->assertJsonStructure([
+            'errors' => [
+                ['title', 'detail', 'source' => ['pointer']]
+            ]
+        ]);
+        $response->assertStatus(422);
+        //Code 422 = HTTP_UNPROCESSABLE_ENTITY
+        $response->assertHeader('content-type', 'application/vnd.api+json');
     }
 
     //-------------------- URL VALIDATIONS
@@ -132,7 +150,16 @@ class CreateStoryTest extends TestCase
         //->dump();
 
         // Basic Error Validation Testing (without JSON:API spec)
-        $response->assertJsonValidationErrors('data.attributes.url');
+        //$response->assertJsonValidationErrors('data.attributes.url');
+
+        $response->assertJsonStructure([
+            'errors' => [
+                ['title', 'detail', 'source' => ['pointer']]
+            ]
+        ]);
+        $response->assertStatus(422);
+        //Code 422 = HTTP_UNPROCESSABLE_ENTITY
+        $response->assertHeader('content-type', 'application/vnd.api+json');
     }
 
     //---------------- CONTENT VALIDATIONS
@@ -155,6 +182,15 @@ class CreateStoryTest extends TestCase
         //->dump();
 
         // Basic Error Validation Testing (without JSON:API spec)
-        $response->assertJsonValidationErrors('data.attributes.content');
+        // $response->assertJsonValidationErrors('data.attributes.content');
+
+        $response->assertJsonStructure([
+            'errors' => [
+                ['title', 'detail', 'source' => ['pointer']]
+            ]
+        ]);
+        $response->assertStatus(422);
+        //Code 422 = HTTP_UNPROCESSABLE_ENTITY
+        $response->assertHeader('content-type', 'application/vnd.api+json');
     }
 }
