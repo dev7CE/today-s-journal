@@ -93,6 +93,11 @@ class CreateStoryTest extends TestCase
                 ['title', 'detail', 'source' => ['pointer']]
             ]
         ]);
+        $response->assertJsonFragment([
+            'source' => [
+                'pointer' => '/data/attributes/title'
+            ]
+        ]);
         $response->assertStatus(422);
         //Code 422 = HTTP_UNPROCESSABLE_ENTITY
         $response->assertHeader('content-type', 'application/vnd.api+json');
@@ -123,6 +128,11 @@ class CreateStoryTest extends TestCase
         $response->assertJsonStructure([
             'errors' => [
                 ['title', 'detail', 'source' => ['pointer']]
+            ]
+        ]);
+        $response->assertJsonFragment([
+            'source' => [
+                'pointer' => '/data/attributes/title'
             ]
         ]);
         $response->assertStatus(422);
@@ -157,6 +167,11 @@ class CreateStoryTest extends TestCase
                 ['title', 'detail', 'source' => ['pointer']]
             ]
         ]);
+        $response->assertJsonFragment([
+            'source' => [
+                'pointer' => '/data/attributes/url'
+            ]
+        ]);
         $response->assertStatus(422);
         //Code 422 = HTTP_UNPROCESSABLE_ENTITY
         $response->assertHeader('content-type', 'application/vnd.api+json');
@@ -187,6 +202,11 @@ class CreateStoryTest extends TestCase
         $response->assertJsonStructure([
             'errors' => [
                 ['title', 'detail', 'source' => ['pointer']]
+            ]
+        ]);
+        $response->assertJsonFragment([
+            'source' => [
+                'pointer' => '/data/attributes/content'
             ]
         ]);
         $response->assertStatus(422);
