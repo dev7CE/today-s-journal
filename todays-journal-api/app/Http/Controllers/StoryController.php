@@ -44,6 +44,12 @@ class StoryController extends Controller
         // Show attributes data inputs only
         // dd($request->input('data.attributes'));
 
+        $request->validate([
+            'data.attributes.title' => ['required','min:4'],
+            'data.attributes.url' => ['required'],
+            'data.attributes.content' => ['required']
+        ]);
+
         $story = Story::create([
             // This will fail if request does not 
             // include all attributes

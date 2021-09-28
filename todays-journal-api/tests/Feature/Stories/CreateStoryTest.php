@@ -65,4 +65,96 @@ class CreateStoryTest extends TestCase
         // $response->dumpHeaders();
             
     }
+
+    //------------------ TITLE VALIDATIONS
+    /** @test */
+    public function title_is_required()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'data' => [
+                'type' => 'stories',
+                'attributes' => [
+                    'url' => 'storie-1',
+                    'content' => 'Lorem Ipsum'
+                ]
+            ]
+        ]);
+        // Show JSON output
+        //->dump();
+
+        // Basic Error Validation Testing (without JSON:API spec)
+        $response->assertJsonValidationErrors('data.attributes.title');
+    }
+    
+    /** @test */
+    public function title_must_be_at_leats_4_characters()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'data' => [
+                'type' => 'stories',
+                'attributes' => [
+                    'title' => 'sto',
+                    //'url' => 'storie-1',
+                    'content' => 'Lorem Ipsum'
+                ]
+            ]
+        ]);
+        // Show JSON output
+        //->dump();
+
+        // Basic Error Validation Testing (without JSON:API spec)
+        $response->assertJsonValidationErrors('data.attributes.title');
+    }
+
+    //-------------------- URL VALIDATIONS
+    /** @test */
+    public function url_is_required()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'data' => [
+                'type' => 'stories',
+                'attributes' => [
+                    'title' => 'storie 1',
+                    'content' => 'Lorem Ipsum'
+                ]
+            ]
+        ]);
+        // Show JSON output
+        //->dump();
+
+        // Basic Error Validation Testing (without JSON:API spec)
+        $response->assertJsonValidationErrors('data.attributes.url');
+    }
+
+    //---------------- CONTENT VALIDATIONS
+    /** @test */
+    public function content_is_required()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'data' => [
+                'type' => 'stories',
+                'attributes' => [
+                    'title' => 'storie 1',
+                    'url' => 'storie-1'
+                ]
+            ]
+        ]);
+        // Show JSON output
+        //->dump();
+
+        // Basic Error Validation Testing (without JSON:API spec)
+        $response->assertJsonValidationErrors('data.attributes.content');
+    }
 }
