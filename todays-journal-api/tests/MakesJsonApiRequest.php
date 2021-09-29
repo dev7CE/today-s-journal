@@ -2,10 +2,34 @@
 
 namespace Tests;
 
+use Closure;
 use \Illuminate\Testing\TestResponse;
 
 trait MakesJsonApiRequest
 {
+    /**
+     * Setup the test environment.
+     * THIS IS A OVERWRITTEN FUNCTION of
+     * \Test\TestCase 'setUp' function.
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // USING MACROS WILL ALLOW US to extend Laravel Default Classes.
+        // In this case, TestResponse is extended with a new method for
+        // assert JSON:API spec Validation Errors.
+        // This Error Validation Test will be available globally
+        // (for every single Test that we need) by calling:
+        // $response->assertJsonApiValidationErrors('attribute_name');
+        TestResponse::macro(
+            'assertJsonApiValidationErrors', 
+            $this->assertJsonApiValidationErrors()
+        );
+        
+    }
 
     /**
      * Call the given URI with a JSON request.
@@ -54,5 +78,28 @@ trait MakesJsonApiRequest
         $headers['content-type'] = 'application/vnd.api+json';
 
         return parent::patchJson($uri, $data, $headers);
+    }
+
+    /**
+     * Validate JSON:API spec error validation
+     * @return Closure
+     */
+    protected function assertJsonApiValidationErrors(): Closure
+    {
+        return function($attribute) {
+            // Set $this as TestResponse instance:
+            /** @var \Illuminate\Testing\TestResponse $this */
+            $this->assertJsonStructure([
+                'errors' => [
+                    ['title', 'detail', 'source' => ['pointer']]
+                ]
+            ])->assertJsonFragment([
+                'source' => [
+                    'pointer' => '/data/attributes/'.$attribute
+                ]
+            ])->assertStatus(422)
+            //Code 422 = HTTP_UNPROCESSABLE_ENTITY
+            ->assertHeader('content-type', 'application/vnd.api+json');
+        };
     }
 }

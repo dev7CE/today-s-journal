@@ -6,12 +6,15 @@ use App\Story;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 class CreateStoryTest extends TestCase
 {
     
     use RefreshDatabase;
+    // If we dont want to load all test:
+    //use MakesJsonApiRequest;
 
     /** @test */
     public function can_create_a_single_story()
@@ -88,19 +91,7 @@ class CreateStoryTest extends TestCase
         // Basic Error Validation Testing (without JSON:API spec)
         //$response->assertJsonValidationErrors('data.attributes.title');
 
-        $response->assertJsonStructure([
-            'errors' => [
-                ['title', 'detail', 'source' => ['pointer']]
-            ]
-        ]);
-        $response->assertJsonFragment([
-            'source' => [
-                'pointer' => '/data/attributes/title'
-            ]
-        ]);
-        $response->assertStatus(422);
-        //Code 422 = HTTP_UNPROCESSABLE_ENTITY
-        $response->assertHeader('content-type', 'application/vnd.api+json');
+        $response->assertJsonApiValidationErrors('title');
     }
     
     /** @test */
@@ -125,19 +116,7 @@ class CreateStoryTest extends TestCase
         // Basic Error Validation Testing (without JSON:API spec)
         //$response->assertJsonValidationErrors('data.attributes.title');
 
-        $response->assertJsonStructure([
-            'errors' => [
-                ['title', 'detail', 'source' => ['pointer']]
-            ]
-        ]);
-        $response->assertJsonFragment([
-            'source' => [
-                'pointer' => '/data/attributes/title'
-            ]
-        ]);
-        $response->assertStatus(422);
-        //Code 422 = HTTP_UNPROCESSABLE_ENTITY
-        $response->assertHeader('content-type', 'application/vnd.api+json');
+        $response->assertJsonApiValidationErrors('title');
     }
 
     //-------------------- URL VALIDATIONS
@@ -162,19 +141,7 @@ class CreateStoryTest extends TestCase
         // Basic Error Validation Testing (without JSON:API spec)
         //$response->assertJsonValidationErrors('data.attributes.url');
 
-        $response->assertJsonStructure([
-            'errors' => [
-                ['title', 'detail', 'source' => ['pointer']]
-            ]
-        ]);
-        $response->assertJsonFragment([
-            'source' => [
-                'pointer' => '/data/attributes/url'
-            ]
-        ]);
-        $response->assertStatus(422);
-        //Code 422 = HTTP_UNPROCESSABLE_ENTITY
-        $response->assertHeader('content-type', 'application/vnd.api+json');
+        $response->assertJsonApiValidationErrors('url');
     }
 
     //---------------- CONTENT VALIDATIONS
@@ -199,18 +166,6 @@ class CreateStoryTest extends TestCase
         // Basic Error Validation Testing (without JSON:API spec)
         // $response->assertJsonValidationErrors('data.attributes.content');
 
-        $response->assertJsonStructure([
-            'errors' => [
-                ['title', 'detail', 'source' => ['pointer']]
-            ]
-        ]);
-        $response->assertJsonFragment([
-            'source' => [
-                'pointer' => '/data/attributes/content'
-            ]
-        ]);
-        $response->assertStatus(422);
-        //Code 422 = HTTP_UNPROCESSABLE_ENTITY
-        $response->assertHeader('content-type', 'application/vnd.api+json');
+        $response->assertJsonApiValidationErrors('content');
     }
 }
