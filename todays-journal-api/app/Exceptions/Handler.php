@@ -85,5 +85,8 @@ class Handler extends ExceptionHandler
         }
 
         return response()->json([ 'errors' => $errors ], 422);
+        // Make throw Expectation Failed Exception in 
+        // JSON:API error response:
+        //return response()->json([ 'error' => $errors ], 422);
     }
 }

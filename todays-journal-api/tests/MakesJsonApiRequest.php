@@ -4,6 +4,8 @@ namespace Tests;
 
 use Closure;
 use \Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Assert as PHPUnit;
+use PHPUnit\Framework\ExpectationFailedException;
 
 trait MakesJsonApiRequest
 {
@@ -89,17 +91,42 @@ trait MakesJsonApiRequest
         return function($attribute) {
             // Set $this as TestResponse instance:
             /** @var \Illuminate\Testing\TestResponse $this */
-            $this->assertJsonStructure([
-                'errors' => [
-                    ['title', 'detail', 'source' => ['pointer']]
-                ]
-            ])->assertJsonFragment([
-                'source' => [
-                    'pointer' => '/data/attributes/'.$attribute
-                ]
-            ])->assertStatus(422)
+            try {
+                $this->assertJsonFragment([
+                    'source' => [
+                        'pointer' => '/data/attributes/'.$attribute
+                    ]
+                ]);
+                // Get the Exception Class
+                //} catch (\Exception $e) {
+                // dd($e);
+            // Custom ExpectationFailedException message
+            } catch (ExpectationFailedException $e) {
+                PHPUnit::fail(
+                    'Failed to find a JSON:API validation error for key: '
+                    .$attribute.PHP_EOL.PHP_EOL.$e->getMessage()
+                );
+            }
+
+            try {
+                $this->assertJsonStructure([
+                    'errors' => [
+                        ['title', 'detail', 'source' => ['pointer']]
+                    ]
+                ]);
+            } catch (ExpectationFailedException $e) {
+                PHPUnit::fail(
+                    'Failed to find a valid JSON:API error response '
+                    .PHP_EOL.PHP_EOL.$e->getMessage()
+                );
+            }
+            
+            $this->assertStatus(422);
             //Code 422 = HTTP_UNPROCESSABLE_ENTITY
-            ->assertHeader('content-type', 'application/vnd.api+json');
+            $this->assertHeader('content-type', 'application/vnd.api+json');
+
+            // This latest two Asserts are not requiered to be customized 
+            // their message Exception, they're well descriptive.
         };
     }
 }
