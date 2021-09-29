@@ -40,3 +40,9 @@ php artisan make:resource [ModelName]Collection
 ------------------------------------------------------------
 'Collection' convention is optional (BUT ITS RECOMMENDED), 
 if not case set -c option
+
+=====================================
+Create Middleware
+-----------------------------------------------------------
+
+php artisan make:middleware [MiddlewareName]

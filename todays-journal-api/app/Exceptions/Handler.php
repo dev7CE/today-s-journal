@@ -84,7 +84,11 @@ class Handler extends ExceptionHandler
             ];
         }
 
-        return response()->json([ 'errors' => $errors ], 422);
+        return response()->json(
+            [ 'errors' => $errors ], 
+            422, 
+            [ 'content-type' => 'application/vnd.api+json' ]
+        );
         // Make throw Expectation Failed Exception in 
         // JSON:API error response:
         //return response()->json([ 'error' => $errors ], 422);
