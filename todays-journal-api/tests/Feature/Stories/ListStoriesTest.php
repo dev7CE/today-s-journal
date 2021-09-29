@@ -22,8 +22,8 @@ class ListStoriesTest extends TestCase
         // $story = Story::factory()->create();
         $story = factory(Story::class)->create();
 
-        $response = $this->getJson(route('api.v1.stories.show', $story))
-            ->dump();
+        $response = $this->getJson(route('api.v1.stories.show', $story));
+        //    ->dump();
 
         // Basic Test
         // $response->assertSee($story->title);
