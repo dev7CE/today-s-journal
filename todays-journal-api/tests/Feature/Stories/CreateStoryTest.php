@@ -20,7 +20,9 @@ class CreateStoryTest extends TestCase
     public function can_create_a_single_story()
     {
         // Show specific errors
-        $this->withoutExceptionHandling();
+        // (To get the JSON:API Error Response, comment 
+        // the line below:)
+        //$this->withoutExceptionHandling();
         // To avoid foreign contraint errors, 
         // we can disable FOREIGN CONSTRAINTS on migrations
         // in order to sent no user_id data field.
@@ -34,20 +36,15 @@ class CreateStoryTest extends TestCase
         ]);
 
         $response = $this->postJson(route('api.v1.stories.store'), [
-            'data' => [
-                'type' => 'stories',
-                'attributes' => [
-                    'title' => $story->title,
-                    'url' => $story->url,
-                    'content' => $story->content
-                ]
-            ]
+            'title' => $story->title,
+            'url' => $story->url,
+            'content' => $story->content
         ]);
         // Show JSON output
         //->dump();
         
         $storyAdded = Story::first();
-
+        
         $response->assertCreated();
         $response->assertExactJson([
             'data' => [
@@ -77,13 +74,8 @@ class CreateStoryTest extends TestCase
         // $this->withoutExceptionHandling();
 
         $response = $this->postJson(route('api.v1.stories.store'), [
-            'data' => [
-                'type' => 'stories',
-                'attributes' => [
-                    'url' => 'storie-1',
-                    'content' => 'Lorem Ipsum'
-                ]
-            ]
+            'url' => 'storie-1',
+            'content' => 'Lorem Ipsum'
         ]);
         // Show JSON output
         //->dump();
@@ -103,14 +95,9 @@ class CreateStoryTest extends TestCase
     // public function title_is_required_with_no_error()
     // {
     //     $response = $this->postJson(route('api.v1.stories.store'), [
-    //         'data' => [
-    //             'type' => 'stories',
-    //             'attributes' => [
-    //                 'title' => 'storie 1',
-    //                 'url' => 'storie-1',
-    //                 'content' => 'Lorem Ipsum'
-    //             ]
-    //         ]
+    //         'title' => 'storie 1',
+    //         'url' => 'storie-1',
+    //         'content' => 'Lorem Ipsum'
     //     ]);
     //
     //     $response->assertJsonApiValidationErrors('title');
@@ -123,14 +110,9 @@ class CreateStoryTest extends TestCase
         // $this->withoutExceptionHandling();
 
         $response = $this->postJson(route('api.v1.stories.store'), [
-            'data' => [
-                'type' => 'stories',
-                'attributes' => [
-                    'title' => 'sto',
-                    //'url' => 'storie-1',
-                    'content' => 'Lorem Ipsum'
-                ]
-            ]
+            'title' => 'sto',
+            'url' => 'storie-1',
+            'content' => 'Lorem Ipsum'
         ]);
         // Show JSON output
         //->dump();
@@ -149,13 +131,8 @@ class CreateStoryTest extends TestCase
         // $this->withoutExceptionHandling();
 
         $response = $this->postJson(route('api.v1.stories.store'), [
-            'data' => [
-                'type' => 'stories',
-                'attributes' => [
-                    'title' => 'storie 1',
-                    'content' => 'Lorem Ipsum'
-                ]
-            ]
+            'title' => 'storie 1',
+            'content' => 'Lorem Ipsum'
         ]);
         // Show JSON output
         //->dump();
@@ -174,13 +151,8 @@ class CreateStoryTest extends TestCase
         // $this->withoutExceptionHandling();
 
         $response = $this->postJson(route('api.v1.stories.store'), [
-            'data' => [
-                'type' => 'stories',
-                'attributes' => [
-                    'title' => 'storie 1',
-                    'url' => 'storie-1'
-                ]
-            ]
+            'title' => 'storie 1',
+            'url' => 'storie-1'
         ]);
         // Show JSON output
         //->dump();

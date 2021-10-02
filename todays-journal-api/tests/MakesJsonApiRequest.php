@@ -10,6 +10,23 @@ use PHPUnit\Framework\ExpectationFailedException;
 
 trait MakesJsonApiRequest
 {
+    // Current php version is 7.3 so we cannot
+    // define typed properties (php 7.4 minimun)
+    /** @var bool $formatJsonApiDocument */
+    protected $formatJsonApiDocument = true;
+    
+    /**
+     * Disable JSON:API spec document format to custom it.
+     * 
+     * @internal This will be useful when testing JSON:API Document
+     * 
+     * @return void
+     */
+    public function withoutJsonApiDocumentFormatting(): void
+    {
+        $this->formatJsonApiDocument = false;
+    }
+    
     /**
      * Setup the test environment.
      * THIS IS A OVERWRITTEN FUNCTION of
@@ -40,7 +57,7 @@ trait MakesJsonApiRequest
      * 
      * @param  string  $method
      * @param  string  $uri
-     * @param  array  $data
+     * @param  array  $data the attributes ONLY
      * @param  array  $headers
      * @return \Illuminate\Testing\TestResponse
      */
@@ -48,7 +65,19 @@ trait MakesJsonApiRequest
     {
         $headers['accept'] = 'application/vnd.api+json';
 
-        return parent::json($method, $uri, $data, $headers);
+        // Display $data sended
+        // dd($data);
+        // type will be obtained by $uri param
+        // dd($uri);
+
+        if($this->formatJsonApiDocument)
+        {
+            $formattedData ['data']['attributes'] = $data;
+            $formattedData ['data']['type'] = (string)Str::of($uri)->after('api/v1');
+            //dd($formattedData);
+        }
+
+        return parent::json($method, $uri, $formattedData ?? $data, $headers);
     }
 
     /**
@@ -56,7 +85,7 @@ trait MakesJsonApiRequest
      * THIS IS A  postJson OVERWRITTEN FUNCTION.
      * 
      * @param  string  $uri
-     * @param  array  $data
+     * @param  array  $data the attributes ONLY
      * @param  array  $headers
      * @return \Illuminate\Testing\TestResponse
      */
@@ -72,7 +101,7 @@ trait MakesJsonApiRequest
      * THIS IS A  patchJson OVERWRITTEN FUNCTION.
      * 
      * @param  string  $uri
-     * @param  array  $data
+     * @param  array  $data the attributes ONLY
      * @param  array  $headers
      * @return \Illuminate\Testing\TestResponse
      */
