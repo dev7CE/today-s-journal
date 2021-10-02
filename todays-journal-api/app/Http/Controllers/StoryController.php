@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveStoryRequest;
 use App\Http\Resources\StoryResource;
 use App\Http\Resources\StoryCollection;
 use App\Story;
@@ -31,10 +32,10 @@ class StoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SaveStoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveStoryRequest $request)
     {
         // Return 201 response
         // return response(null, 201);
@@ -43,20 +44,12 @@ class StoryController extends Controller
         // dd($request->all());
         // Show attributes data inputs only
         // dd($request->input('data.attributes'));
-
-        $request->validate([
-            'data.attributes.title' => ['required','min:4'],
-            'data.attributes.url' => ['required'],
-            'data.attributes.content' => ['required']
-        ]);
-
-        $story = Story::create([
-            // This will fail if request does not 
-            // include all attributes
-            'title' => $request->input('data.attributes.title'),
-            'url' => $request->input('data.attributes.url'),
-            'content' => $request->input('data.attributes.content')
-        ]);
+        // Instead of get each input with request->input
+        // function, we can use validated method to get 
+        // the validated attribues (will not work beacause
+        // function was overwritten).
+        // dd($request->validated()['data']['attributes']);
+        $story = Story::create($request->validated());
         
         // Resource object detects if model 
         // was recently created, will return 201 code.
@@ -82,23 +75,13 @@ class StoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SaveStoryRequest  $request
      * @param  \App\Story  $story
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Story $story)
+    public function update(SaveStoryRequest $request, Story $story)
     {
-        $request->validate([
-            'data.attributes.title' => ['required','min:4'],
-            'data.attributes.url' => ['required'],
-            'data.attributes.content' => ['required']
-        ]);
-
-        $story->update([
-            'title' => $request->input('data.attributes.title', $story->title),
-            'url' => $request->input('data.attributes.url', $story->url),
-            'content' => $request->input('data.attributes.content', $story->content)
-        ]);
+        $story->update($request->validated());
 
         return StoryResource::make($story);
     }
