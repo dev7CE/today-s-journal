@@ -79,4 +79,27 @@ class StoryController extends Controller
         return StoryResource::make($story);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Story  $story
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Story $story)
+    {
+        $request->validate([
+            'data.attributes.title' => ['required','min:4'],
+            'data.attributes.url' => ['required'],
+            'data.attributes.content' => ['required']
+        ]);
+
+        $story->update([
+            'title' => $request->input('data.attributes.title', $story->title),
+            'url' => $request->input('data.attributes.url', $story->url),
+            'content' => $request->input('data.attributes.content', $story->content)
+        ]);
+
+        return StoryResource::make($story);
+    }
 }

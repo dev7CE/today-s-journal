@@ -23,5 +23,7 @@ Route::get('stories', [StoryController::class, 'index'])
     ->name('api.v1.stories.index');
 Route::get('stories/{story}', [StoryController::class, 'show'])
     ->name('api.v1.stories.show');
+Route::patch('stories/{story}', [StoryController::class, 'update'])
+    ->name('api.v1.stories.update');
 Route::post('stories', [StoryController::class, 'store'])
     ->name('api.v1.stories.store');
