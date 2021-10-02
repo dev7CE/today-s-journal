@@ -102,4 +102,19 @@ class StoryController extends Controller
 
         return StoryResource::make($story);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Story  $story
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Story $story)
+    {
+        $story->delete();
+        // Using response to return No Content
+        // return response('',204,[]);
+        // Using noContent function
+        return response()->noContent();
+    }
 }
