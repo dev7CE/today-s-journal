@@ -72,28 +72,8 @@ trait MakesJsonApiRequest
 
         if($this->formatJsonApiDocument)
         {
-            // Get URL Components and their respect values
-            // ['component_name'] Get specific URL component, e.g. 'path'
-            // dump(parse_url($uri)['component_name']);
-            $path = parse_url($uri)['path'];
-
-            $formattedData ['data']['attributes'] = $data;
-            $formattedData ['data']['type'] = $type = (string)Str::of($path)->after('api/v1/')->before('/');
-            $formattedData ['data']['id'] = $id = (string)Str::of($path)->after($type)->replace('/','');
+            $formattedData = $this->getFormattedData($uri, $data);
             //dd($formattedData);
-            // Get this values in both PATCH and POST request
-            // to validate we receive the appropiate for each
-            // request
-            // dd($path);
-            // dd($id);
-            // Delete empty key values. This will work if
-            // the request is POST, 'data'.'id' will be
-            // deleted:
-            // (WARNING: will also delete 'data')
-            // dd(array_filter($formattedData['data']));
-            // This should be the rigth output
-            // dump(['data' => array_filter($formattedData['data'])]);
-            $formattedData = ['data' => array_filter($formattedData['data'])];
         }
 
         return parent::json($method, $uri, $formattedData ?? $data, $headers);
@@ -182,5 +162,42 @@ trait MakesJsonApiRequest
             // This latest two Asserts are not requiered to be customized 
             // their message Exception, they're well descriptive.
         };
+    }
+
+    /**
+     * Get array of JSON:API spec document structure
+     * @param string $uri the request URI
+     * @param array $data the Resource Atributes
+     * @return array JSON:API structure
+     */
+    protected function getFormattedData ($uri, array $data):array
+    {
+        // Get URL Components and their respect values
+        // ['component_name'] Get specific URL component, e.g. 'path'
+        // dump(parse_url($uri)['component_name']);
+        $path = parse_url($uri)['path'];
+        $type = (string)Str::of($path)->after('api/v1/')->before('/');
+        $id = (string)Str::of($path)->after($type)->replace('/', '');
+
+        // Get this values in both PATCH and POST request
+        // to validate we receive the appropiate for each
+        // request
+        // dd($path);
+        // dd($id);
+        // Delete empty key values. This will work if
+        // the request is POST, 'data'.'id' will be
+        // deleted:
+        // (WARNING: will also delete 'data')
+        // dd(array_filter($formattedData['data']));
+        // This should be the rigth output
+        // dump(['data' => array_filter($formattedData['data'])]);
+    
+        return [
+            'data' => array_filter([
+                'type' => $type,
+                'id' => $id,
+                'attributes' => $data
+            ])
+        ];
     }
 }
