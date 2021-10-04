@@ -150,7 +150,9 @@ class UpdateStoriesTest extends TestCase
         ]);
         // Show JSON output
         //->dump();
-
+        $response->assertSee(__('validation.no_underscore',[
+            'attribute' => 'data.attributes.url'
+        ]));
         $response->assertJsonApiValidationErrors('url');
     }
 
@@ -170,7 +172,9 @@ class UpdateStoriesTest extends TestCase
         ]);
         // Show JSON output
         //->dump();
-
+        $response->assertSee(__('validation.no_starting_dashes',[
+            'attribute' => 'data.attributes.url'
+        ]));
         $response->assertJsonApiValidationErrors('url');
     }
 
@@ -190,7 +194,9 @@ class UpdateStoriesTest extends TestCase
         ]);
         // Show JSON output
         //->dump();
-
+        $response->assertSee(__('validation.no_ending_dashes',[
+            'attribute' => 'data.attributes.url'
+        ]));
         $response->assertJsonApiValidationErrors('url');
     }
 
