@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SaveStoryRequest extends FormRequest
 {
@@ -25,7 +26,14 @@ class SaveStoryRequest extends FormRequest
     {
         return [
             'data.attributes.title' => ['required','min:4'],
-            'data.attributes.url' => ['required'],
+            'data.attributes.url' => [
+                'required', 
+                Rule::unique('stories','url')->ignore($this->route('story')), 
+                'alpha_dash',
+                'not_regex:/_/',
+                'not_regex:/^-/',
+                'not_regex:/-$/'
+            ],
             'data.attributes.content' => ['required']
         ];
     }

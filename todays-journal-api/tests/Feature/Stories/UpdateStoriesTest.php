@@ -22,7 +22,7 @@ class UpdateStoriesTest extends TestCase
 
         $response = $this->patchJson(route('api.v1.stories.update', $story), [
             'title' => 'The Story UPDT',
-            'url' => 'the-story-updt',
+            'url' => $story->url,
             'content' => 'Lorem Ipsum UPDT'
         ]);
         // Show JSON output
@@ -35,7 +35,7 @@ class UpdateStoriesTest extends TestCase
                 'id' => (string) $story->getRouteKey(),
                 'attributes' => [
                     'title' => 'The Story UPDT',
-                    'url' => 'the-story-updt',
+                    'url' => $story->url,
                     'content' => 'Lorem Ipsum UPDT'
                 ],
                 'links' => [
@@ -87,6 +87,109 @@ class UpdateStoriesTest extends TestCase
             'title' => 'The Story UPDT',
             'content' => 'Lorem Ipsum UPDT'
         ]);
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
+    /** @test */
+    public function url_must_be_unique()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        /** @var Story */
+        $story1 = factory(Story::class)->create();
+        
+        /** @var Story */
+        $story2 = factory(Story::class)->create();
+
+        $response = $this->patchJson(route('api.v1.stories.update', $story1), [
+            'title' => 'The Story UPDT',
+            'url' => $story2->url,
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+    
+    /** @test */
+    public function url_must_only_contain_letters_numbers_and_dashes()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        /** @var Story */
+        $story = factory(Story::class)->create();
+
+        $response = $this->patchJson(route('api.v1.stories.update', $story), [
+            'title' => 'The Story UPDT',
+            'url' => '$%^&',
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
+    /** @test */
+    public function url_must_not_contain_underscores()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        /** @var Story */
+        $story = factory(Story::class)->create();
+
+        $response = $this->patchJson(route('api.v1.stories.update', $story), [
+            'title' => 'The Story UPDT',
+            'url' => 'thestory_upt_with_underscores',
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
+    /** @test */
+    public function url_must_not_start_with_dashes()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        /** @var Story */
+        $story = factory(Story::class)->create();
+
+        $response = $this->patchJson(route('api.v1.stories.update', $story), [
+            'title' => 'The Story UPDT',
+            'url' => '-the-story-starting-with-a-dash',
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
+    /** @test */
+    public function url_must_not_end_with_dashes()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        /** @var Story */
+        $story = factory(Story::class)->create();
+
+        $response = $this->patchJson(route('api.v1.stories.update', $story), [
+            'title' => 'The Story UPDT',
+            'url' => 'the-story-ending-with-a-dash-',
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
 
         $response->assertJsonApiValidationErrors('url');
     }

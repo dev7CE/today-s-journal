@@ -143,6 +143,94 @@ class CreateStoryTest extends TestCase
         $response->assertJsonApiValidationErrors('url');
     }
 
+    /** @test */
+    public function url_must_be_unique()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        /** @var Story */
+        $story = factory(Story::class)->create();
+        
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'title' => 'storie 2',
+            'url' => $story->url,
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
+    /** @test */
+    public function url_must_only_contain_letters_numbers_and_dashes()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'title' => 'The Story UPDT',
+            'url' => '$%^&',
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
+    /** @test */
+    public function url_must_not_contain_underscores()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'title' => 'The Story UPDT',
+            'url' => 'thestory_upt_with_underscores',
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
+    /** @test */
+    public function url_must_not_start_with_dashes()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'title' => 'The Story UPDT',
+            'url' => '-the-story-starting-with-a-dash',
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
+    /** @test */
+    public function url_must_not_end_with_dashes()
+    {
+        // Show specific errors
+        // $this->withoutExceptionHandling();
+
+        $response = $this->postJson(route('api.v1.stories.store'), [
+            'title' => 'The Story UPDT',
+            'url' => 'the-story-ending-with-a-dash-',
+            'content' => 'Lorem Ipsum'
+        ]);
+        // Show JSON output
+        //->dump();
+
+        $response->assertJsonApiValidationErrors('url');
+    }
+
     //---------------- CONTENT VALIDATIONS
     /** @test */
     public function content_is_required()
