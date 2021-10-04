@@ -9,6 +9,7 @@ use App\Story;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class StoryController extends Controller
 {
@@ -19,14 +20,28 @@ class StoryController extends Controller
     // Refact: can_fecth_a_single_model function renamed
     /**
      * Display a listing of the resource.
-     *
+     * @return StoryCollection
      */
-    public function index():StoryCollection
+    public function index(Request $request):StoryCollection
     {
+        // dd($request->sort);
+        if($request->sort)
+        {
+            $sortField = $request->sort;
+            $sortDirection = Str::of($sortField)->startsWith('-') 
+                ? 'desc' : 'asc';
+            
+            $sortField = ltrim($sortField, "-");
+
+            $stories = Story::orderBy($sortField, $sortDirection)->get();
+        } else {
+            $stories = Story::all();
+        }
+        
         // With default Model Collection
         // return StoryResource::collection(Story::all());
         // With default Model Collection MODIFIED
-        return StoryCollection::make(Story::all());
+        return StoryCollection::make($stories);
     }
 
     /**
