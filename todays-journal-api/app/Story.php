@@ -24,6 +24,17 @@ class Story extends Model
     protected $guarded = [];
 
     /**
+     * Get the route key for the model.
+     * OVERRIDEN FUNCTION TO SET URL (slug) as route key.
+     * 
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'url';
+    }
+
+    /**
      * Get the user that owns the story.
      */
     public function user()
