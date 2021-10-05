@@ -9,6 +9,8 @@ use Tests\TestCase;
 
 class SortStoriesTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function can_sort_stories_by_title()
     {
@@ -73,5 +75,43 @@ class SortStoriesTest extends TestCase
             'B Lorem Ipsum',
             'A Lorem Ipsum'
         ]);
+    }
+
+    // ---------------------------------- BY MULTIPLE PARAMS
+    /** @test */
+    public function can_sort_stories_by_title_and__dash_content()
+    {
+        factory(Story::class)->create([
+            'title' => 'A Title',
+            'content' => 'A Lorem Ipsum'
+        ]);
+
+        factory(Story::class)->create([
+            'title' => 'B Title',
+            'content' => 'B Lorem Ipsum'
+        ]);
+        factory(Story::class)->create([
+            'title' => 'A Title',
+            'content' => 'C Lorem Ipsum'
+        ]);
+
+        $url = route('api.v1.stories.index', ['sort' => 'title,-content']);
+
+        $this->getJson($url)->assertSeeInOrder([
+            'C Lorem Ipsum',
+            'A Lorem Ipsum',
+            'B Lorem Ipsum'
+        ]);
+    }
+
+    /** @test */
+    public function cannot_sort_stories_by_unknown_fields()
+    {
+        factory(Story::class, 3)->create();
+
+        $url = route('api.v1.stories.index', ['sort' => 'unknown']);
+
+        $this->getJson($url)->assertStatus(400);
+        // 400 code: HTTP_BAD_REQUEST
     }
 }

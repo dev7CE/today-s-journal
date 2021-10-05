@@ -25,23 +25,28 @@ class StoryController extends Controller
     public function index(Request $request):StoryCollection
     {
         // dd($request->sort);
-        if($request->sort)
-        {
-            $sortField = $request->sort;
-            $sortDirection = Str::of($sortField)->startsWith('-') 
-                ? 'desc' : 'asc';
-            
-            $sortField = ltrim($sortField, "-");
+        // dd(explode(',', $request->sort));
+        $stories = Story::query();
 
-            $stories = Story::orderBy($sortField, $sortDirection)->get();
-        } else {
-            $stories = Story::all();
+        if($request->filled('sort'))
+        {
+            $sortFields = explode(',', $request->sort);
+
+            $allowedSorts = ['title', 'content'];
+
+            foreach ($sortFields as $sortField) 
+            {
+                $sortDirection = Str::of($sortField)->startsWith('-') 
+                ? 'desc' : 'asc';
+                
+                $sortField = ltrim($sortField, "-");
+
+                abort_unless(in_array($sortField, $allowedSorts), 400);
+
+                $stories->orderBy($sortField, $sortDirection);
+            }
         }
-        
-        // With default Model Collection
-        // return StoryResource::collection(Story::all());
-        // With default Model Collection MODIFIED
-        return StoryCollection::make($stories);
+        return StoryCollection::make($stories->get());
     }
 
     /**
