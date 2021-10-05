@@ -62,9 +62,9 @@ class SortStoriesTest extends TestCase
     /** @test */
     public function can_sort_stories_by_content_descending()
     {
-        factory(Story::class)->create(['title' => 'B Lorem Ipsum']);
-        factory(Story::class)->create(['title' => 'C Lorem Ipsum']);
-        factory(Story::class)->create(['title' => 'A Lorem Ipsum']);
+        factory(Story::class)->create(['content' => 'B Lorem Ipsum']);
+        factory(Story::class)->create(['content' => 'C Lorem Ipsum']);
+        factory(Story::class)->create(['content' => 'A Lorem Ipsum']);
 
         $url = route('api.v1.stories.index',['sort' => '-content']);
         
