@@ -46,3 +46,9 @@ Create Middleware
 -----------------------------------------------------------
 
 php artisan make:middleware [MiddlewareName]
+
+=====================================
+Create Service Provider
+-----------------------------------------------------------
+
+php artisan make:provider [Name]ServiceProvider

@@ -7,9 +7,7 @@ use App\Http\Resources\StoryResource;
 use App\Http\Resources\StoryCollection;
 use App\Story;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class StoryController extends Controller
 {
@@ -22,30 +20,14 @@ class StoryController extends Controller
      * Display a listing of the resource.
      * @return StoryCollection
      */
-    public function index(Request $request):StoryCollection
+    public function index():StoryCollection
     {
+        // Checking Query String pararms by set
+        // Request $request as method parameter
         // dd($request->sort);
         // dd(explode(',', $request->sort));
-        $stories = Story::query();
-
-        if($request->filled('sort'))
-        {
-            $sortFields = explode(',', $request->sort);
-
-            $allowedSorts = ['title', 'content'];
-
-            foreach ($sortFields as $sortField) 
-            {
-                $sortDirection = Str::of($sortField)->startsWith('-') 
-                ? 'desc' : 'asc';
-                
-                $sortField = ltrim($sortField, "-");
-
-                abort_unless(in_array($sortField, $allowedSorts), 400);
-
-                $stories->orderBy($sortField, $sortDirection);
-            }
-        }
+       
+        $stories = Story::allowedSorts(['title', 'content']);
         return StoryCollection::make($stories->get());
     }
 
