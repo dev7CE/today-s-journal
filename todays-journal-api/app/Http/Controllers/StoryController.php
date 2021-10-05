@@ -7,6 +7,7 @@ use App\Http\Resources\StoryResource;
 use App\Http\Resources\StoryCollection;
 use App\Story;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StoryController extends Controller
@@ -28,7 +29,21 @@ class StoryController extends Controller
         // dd(explode(',', $request->sort));
        
         $stories = Story::allowedSorts(['title', 'content']);
-        return StoryCollection::make($stories->get());
+        
+        // dd(request('page'));
+        // dd(request('page.size'));
+        // if(request('page'))
+        return StoryCollection::make($stories
+            ->paginate(
+                $perPage = request('page.size'), 
+                $columns = ['*'], 
+                $pageName = 'page[number]', 
+                $page = request('page.number')
+            )
+            ->appends(request()->only('page.size'))
+        );
+
+        // return StoryCollection::make($stories->get());
     }
 
     /**

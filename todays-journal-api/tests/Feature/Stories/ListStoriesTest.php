@@ -57,7 +57,7 @@ class ListStoriesTest extends TestCase
             // Show JSON output
             //->dump();
 
-        $response->assertExactJson([
+        $response->assertJsonFragment([
             'data' => [
                 [
                     'type' => 'stories',
@@ -83,9 +83,6 @@ class ListStoriesTest extends TestCase
                 //         'self' => route('api.v1.stories.show', $stories[1]) 
                 //     ]
                 // ]
-            ],
-            'links' => [
-                'self' => route('api.v1.stories.index'),
             ]
         ]);
     }
