@@ -28,20 +28,14 @@ class StoryController extends Controller
         // dd($request->sort);
         // dd(explode(',', $request->sort));
        
-        $stories = Story::allowedSorts(['title', 'content']);
+        $stories = Story::allowedSorts(['title', 'content'])
+            ->jsonPaginate();
         
         // dd(request('page'));
         // dd(request('page.size'));
         // if(request('page'))
-        return StoryCollection::make($stories
-            ->paginate(
-                $perPage = request('page.size'), 
-                $columns = ['*'], 
-                $pageName = 'page[number]', 
-                $page = request('page.number')
-            )
-            ->appends(request()->only('page.size'))
-        );
+
+        return StoryCollection::make($stories);
 
         // return StoryCollection::make($stories->get());
     }

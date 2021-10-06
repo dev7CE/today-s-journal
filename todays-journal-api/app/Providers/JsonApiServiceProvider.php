@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -13,10 +13,7 @@ class JsonApiServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-        //
-    }
+    public function register() { }
 
     /**
      * Bootstrap services.
@@ -45,6 +42,18 @@ class JsonApiServiceProvider extends ServiceProvider
                 }
             } 
             return $this;
+        });
+
+        Builder::macro('jsonPaginate', function ()
+        {
+            /** @var Builder $this */
+            return $this->paginate(
+                $perPage = request('page.size'), 
+                $columns = ['*'], 
+                $pageName = 'page[number]', 
+                $page = request('page.number')
+            )->appends(request()->only('page.size'));
+            
         });
     }
 }
