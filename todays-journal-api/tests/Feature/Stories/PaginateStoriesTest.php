@@ -53,4 +53,35 @@ class PaginateStoriesTest extends TestCase
             'next' => route('api.v1.stories.index', ['page[size]' => 2, 'page[number]' => 4]),
         ]);
     }
+
+    /** @test */
+    public function can_fetch_paginated_and_sorted_stories()
+    {
+        factory(Story::class)->create(['title' => 'C Story']);
+        factory(Story::class)->create(['title' => 'A Story']);
+        factory(Story::class)->create(['title' => 'B Story']);
+        
+        $url = route('api.v1.stories.index', [
+            'sort' => 'title',
+            'page' => [
+                'size' => 1,
+                'number' => 2
+            ]
+        ]);
+
+        // dd(urldecode($url));
+
+        $response = $this->getJson($url);
+        $response->assertSee('B Story');
+        
+        $response->assertDontSee('A Story');
+        $response->assertDontSee('C Story');
+
+        $response->assertJsonFragment([
+            'first' => route('api.v1.stories.index', ['sort' => 'title', 'page[size]' => 1, 'page[number]' => 1]),
+            'last' => route('api.v1.stories.index', ['sort' => 'title', 'page[size]' => 1, 'page[number]' => 3]),
+            'prev' => route('api.v1.stories.index', ['sort' => 'title', 'page[size]' => 1, 'page[number]' => 1]),
+            'next' => route('api.v1.stories.index', ['sort' => 'title', 'page[size]' => 1, 'page[number]' => 3]),
+        ]);
+    }
 }
