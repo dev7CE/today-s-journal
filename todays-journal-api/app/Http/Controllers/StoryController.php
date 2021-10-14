@@ -21,21 +21,38 @@ class StoryController extends Controller
      * Display a listing of the resource.
      * @return StoryCollection
      */
-    public function index():StoryCollection
+    public function index(): StoryCollection
     {
         // Checking Query String pararms by set
         // Request $request as method parameter
         // dd($request->sort);
         // dd(explode(',', $request->sort));
-       
-        $stories = Story::allowedSorts(['title', 'content'])
-            ->jsonPaginate();
+        $stories = Story::query();
+
+        // Filtering
+        // dd(request('filter.title'));
+        $allowedFilters = ['title', 'content', 'month', 'year'];
+
+        foreach (request('filter', []) as $filter => $value) {
+            // Will return BAD_REQUEST
+            abort_unless(in_array($filter, $allowedFilters), 400);
+
+            if ($filter === 'year') {
+                $stories->whereYear('created_at', $value);
+            } else if($filter === 'month') {
+                $stories->whereMonth('created_at', $value);
+            } else {
+                $stories->where($filter, 'LIKE', "%".$value."%");
+            }
+        }
+
+        $stories->allowedSorts(['title', 'content']);
         
         // dd(request('page'));
         // dd(request('page.size'));
         // if(request('page'))
 
-        return StoryCollection::make($stories);
+        return StoryCollection::make($stories->jsonPaginate());
 
         // return StoryCollection::make($stories->get());
     }
