@@ -55,7 +55,7 @@ class PaginateStoriesTest extends TestCase
     }
 
     /** @test */
-    public function can_fetch_paginated_and_sorted_stories()
+    public function can_fetch_paginate_sorted_stories()
     {
         factory(Story::class)->create(['title' => 'C Story']);
         factory(Story::class)->create(['title' => 'A Story']);
@@ -82,6 +82,54 @@ class PaginateStoriesTest extends TestCase
             'last' => route('api.v1.stories.index', ['sort' => 'title', 'page[size]' => 1, 'page[number]' => 3]),
             'prev' => route('api.v1.stories.index', ['sort' => 'title', 'page[size]' => 1, 'page[number]' => 1]),
             'next' => route('api.v1.stories.index', ['sort' => 'title', 'page[size]' => 1, 'page[number]' => 3]),
+        ]);
+    }
+
+    /** @test */
+    public function can_fetch_paginated_filtered_stories()
+    {
+        factory(Story::class, 3)->create();
+        factory(Story::class)->create(['title' => 'C Laravel Story']);
+        factory(Story::class)->create(['title' => 'A Laravel Story']);
+        factory(Story::class)->create(['title' => 'B Laravel Story']);
+         
+        // The result URL:
+        // stories?filter[property]=value&page[size]=3&page[number]=3"
+
+        $url = route('api.v1.stories.index', [
+            'filter' => [
+                'title' => 'Laravel'
+            ],
+            'page' => [
+                'size' => 1,
+                'number' => 2
+        ]]);
+
+        // dd(urldecode($url));
+
+        $response = $this->getJson($url);
+
+        $response->assertJsonFragment([
+            'first' => route('api.v1.stories.index', [
+                'filter[title]' => 'Laravel', 
+                'page[size]' => 1, 
+                'page[number]' => 1
+            ]),
+            'last' => route('api.v1.stories.index', [
+                'filter[title]' => 'Laravel', 
+                'page[size]' => 1, 
+                'page[number]' => 3
+            ]),
+            'prev' => route('api.v1.stories.index', [
+                'filter[title]' => 'Laravel', 
+                'page[size]' => 1, 
+                'page[number]' => 1
+            ]),
+            'next' => route('api.v1.stories.index', [
+                'filter[title]' => 'Laravel', 
+                'page[size]' => 1, 
+                'page[number]' => 3
+            ]),
         ]);
     }
 }

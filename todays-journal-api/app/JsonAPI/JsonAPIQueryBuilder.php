@@ -79,7 +79,7 @@ class JsonAPIQueryBuilder {
                 $columns = ['*'], 
                 $pageName = 'page[number]', 
                 $page = request('page.number', 1)
-            )->appends(request()->only('sort', 'page.size'));
+            )->appends(request()->only('sort', 'filter', 'page.size'));
             
         };
     }
