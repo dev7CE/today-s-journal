@@ -40,6 +40,31 @@ class JsonAPIQueryBuilder {
     }
 
     /**
+     * MACRO.
+     * Filter Model Resources by given property (ies).
+     * 
+     * @return Closure
+     */
+    public function allowedFilters (): Closure
+    {
+        return function($allowedFilters) {
+            /** @var Builder $this */
+            foreach (request('filter', []) as $filter => $value) {
+                // Will return BAD_REQUEST
+                abort_unless(in_array($filter, $allowedFilters), 400);
+    
+                // Using a query scope
+                // $stories->year($value);
+                // Call scope if match with the given $filter
+                $this->hasNamedScope($filter) 
+                    ? $this->{$filter}($value)
+                    : $this->where($filter, 'LIKE', "%".$value."%");
+            }
+            return $this;
+        };
+    }
+
+    /**
      * Paginate Model Resources based on JSON:API Spec.
      * 
      * @return Closure

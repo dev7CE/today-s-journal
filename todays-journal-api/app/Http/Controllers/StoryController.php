@@ -27,32 +27,21 @@ class StoryController extends Controller
         // Request $request as method parameter
         // dd($request->sort);
         // dd(explode(',', $request->sort));
-        $stories = Story::query();
+        $stories = Story::query()
+            ->allowedFilters(['title', 'content', 'month', 'year'])
+            ->allowedSorts(['title', 'content'])
+            ->jsonPaginate();
 
         // Filtering
         // dd(request('filter.title'));
-        $allowedFilters = ['title', 'content', 'month', 'year'];
+        // Filtering Logic extracted to 
+        // allowedSorts Macro
 
-        foreach (request('filter', []) as $filter => $value) {
-            // Will return BAD_REQUEST
-            abort_unless(in_array($filter, $allowedFilters), 400);
-
-            if ($filter === 'year') {
-                $stories->whereYear('created_at', $value);
-            } else if($filter === 'month') {
-                $stories->whereMonth('created_at', $value);
-            } else {
-                $stories->where($filter, 'LIKE', "%".$value."%");
-            }
-        }
-
-        $stories->allowedSorts(['title', 'content']);
-        
         // dd(request('page'));
         // dd(request('page.size'));
         // if(request('page'))
 
-        return StoryCollection::make($stories->jsonPaginate());
+        return StoryCollection::make($stories);
 
         // return StoryCollection::make($stories->get());
     }
