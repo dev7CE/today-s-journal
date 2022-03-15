@@ -66,7 +66,8 @@ class StoryController extends Controller
         // the validated attribues (will not work beacause
         // function was overwritten).
         // dd($request->validated()['data']['attributes']);
-        $story = Story::create($request->validated());
+        $story = Story::create($request->validated() 
+            + ['user_id' => auth()->id()]);
         
         // Resource object detects if model 
         // was recently created, will return 201 code.

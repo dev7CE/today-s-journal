@@ -52,3 +52,9 @@ Create Service Provider
 -----------------------------------------------------------
 
 php artisan make:provider [Name]ServiceProvider
+
+=====================================
+Implement Sanctum Authentication Create
+-----------------------------------------------------------
+
+composer require laravel/sanctum

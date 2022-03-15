@@ -15,11 +15,11 @@ class CreateStoriesTable extends Migration
     {
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
-            // Comment to test Store Story action
-            // $table->foreignId('user_id');
-            // $table->foreign('user_id')
-            //     ->references('id')
-            //     ->on('users');
+            // Comment to test Store Story action without a user referecence
+            $table->foreignId('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
             $table->string('title');
             $table->string('url')->unique();
             $table->longText('content');

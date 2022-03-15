@@ -26,6 +26,7 @@ Route::get('stories/{story}', [StoryController::class, 'show'])
 Route::patch('stories/{story}', [StoryController::class, 'update'])
     ->name('api.v1.stories.update');
 Route::post('stories', [StoryController::class, 'store'])
-    ->name('api.v1.stories.store');
+    ->name('api.v1.stories.store')
+    ->middleware('auth');
 Route::delete('stories/{story}', [StoryController::class, 'destroy'])
     ->name('api.v1.stories.destroy');

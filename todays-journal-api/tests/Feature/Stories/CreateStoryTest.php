@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\TestResponse;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CreateStoryTest extends TestCase
@@ -19,6 +20,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function can_create_a_single_story()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // (To get the JSON:API Error Response, comment 
         // the line below:)
@@ -70,6 +72,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function title_is_required()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
@@ -106,6 +109,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function title_must_be_at_leats_4_characters()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
@@ -127,6 +131,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function url_is_required()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
@@ -146,6 +151,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function url_must_be_unique()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
@@ -166,6 +172,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function url_must_only_contain_letters_numbers_and_dashes()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
@@ -183,6 +190,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function url_must_not_contain_underscores()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
@@ -202,6 +210,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function url_must_not_start_with_dashes()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
@@ -221,6 +230,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function url_must_not_end_with_dashes()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
@@ -241,6 +251,7 @@ class CreateStoryTest extends TestCase
     /** @test */
     public function content_is_required()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         // Show specific errors
         // $this->withoutExceptionHandling();
 
