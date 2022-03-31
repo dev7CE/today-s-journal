@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::namespace('Auth')->group(function(){
+    Route::post('login', 'LoginController')
+        ->withoutMiddleware([
+            'validate.json.api.document',
+            'validate.json.api.headers',
+        ])->name('api.v1.auth.login');
+});
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
