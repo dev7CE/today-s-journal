@@ -29,6 +29,7 @@ class LoginTest extends TestCase
         ]);
 
         
+        $response->assertCreated();
         $response->assertJsonStructure(['plain_text_token']);
         $this->assertTrue(
             !is_null(
