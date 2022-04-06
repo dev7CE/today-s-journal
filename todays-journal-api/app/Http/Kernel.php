@@ -41,8 +41,8 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            // TODO:
-            // Validate if Request is not empty in POST & PATH Methods
+            // Request Content Check
+            \App\Http\Middleware\CheckIfRequestIsEmpty::class,
             // Apply Middleware Header
             \App\Http\Middleware\ValidateJsonApiHeaders::class,
             // JSON:API Document Middleware (added at the on of 
