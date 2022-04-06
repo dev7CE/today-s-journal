@@ -26,8 +26,12 @@ class LoginController extends Controller
             ]);
         }
     
-        return [
-            "plain_text_token" => $user->createToken($request->device_name)->plainTextToken
-        ];
+        return response(
+            [
+                "plain_text_token" => 
+                    $user->createToken($request->device_name)->plainTextToken
+            ],
+            201
+        );
     }
 }
