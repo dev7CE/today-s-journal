@@ -20,7 +20,7 @@ class CheckIfRequestIsEmpty
      */
     public function handle($request, Closure $next)
     {
-        if($request->isMethod('POST') || $request->isMethod('PATH')){
+        if($request->isMethod('POST') || $request->isMethod('PATCH')){
             if(!$request->all()){
                 throw new RequestEmptyException;
             }
