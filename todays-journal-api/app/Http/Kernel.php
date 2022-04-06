@@ -41,6 +41,8 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // TODO:
+            // Validate if Request is not empty in POST & PATH Methods
             // Apply Middleware Header
             \App\Http\Middleware\ValidateJsonApiHeaders::class,
             // JSON:API Document Middleware (added at the on of 
@@ -69,5 +71,18 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'validate.json.api.headers' => \App\Http\Middleware\ValidateJsonApiHeaders::class,
         'validate.json.api.document' => \App\Http\Middleware\ValidateJsonApiDocument::class,
+    ];
+
+    /**
+     * The priority-sorted list of middleware.
+     * 
+     * Forces non-global middleware to always be in the given order.
+     *
+     * @var array
+     */
+    protected $middlewarePriority = [
+        \App\Http\Middleware\ValidateJsonApiDocument::class, 
+        \App\Http\Middleware\ValidateJsonApiHeaders::class, 
+        \App\Http\Middleware\Authenticate::class, 
     ];
 }
