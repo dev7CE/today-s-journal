@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\CheckIfRequestIsEmpty;
 use App\Http\Middleware\ValidateJsonApiDocument;
 use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
@@ -24,6 +25,28 @@ class ValidateJsonApiDocumentTest extends TestCase
         Route::any('test_route', function() {
             return 'OK';
         })->middleware(ValidateJsonApiDocument::class);
+        
+        Route::any('test_request_content', function() { return 'OK'; })
+            ->middleware(CheckIfRequestIsEmpty::class);
+    }
+    
+    /** @test */
+    public function cannot_accept_empty_body_in_post_and_patch_request()
+    {
+        $this->withExceptionHandling();
+        $error_structure ['errors'] = [[
+            'title' => 'Request Content is Empty', 
+            'statusCode' => '400', 
+            'detail' => 'No content was found in received request', 
+        ],];
+
+        $this->post('test_request_content')
+            ->assertStatus(400)
+            ->assertExactJson($error_structure);
+
+        $this->patch('test_request_content')
+            ->assertStatus(400)
+            ->assertExactJson($error_structure);
     }
     
     /** @test */
