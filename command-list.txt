@@ -71,3 +71,8 @@ Create Exception
 
 php artisan make:exception [Name]Exception
 
+=====================================
+Create Model Seeder
+-----------------------------------------------------------
+
+php artisan make:seeder [Name]Seeder
