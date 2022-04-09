@@ -1,0 +1,1215 @@
+{
+	"info": {
+		"_postman_id": "16f393a7-742d-4dce-8710-b71b3c198ea5",
+		"name": "Today's Journal API",
+		"description": "API built under JSON:API Specification. To learn more about this spec [visit the official docs](https://jsonapi.org/format/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login - Mobile Application (Token)",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Content-Type JSON:API}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "loremi@email.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "device_name",
+									"value": "MyDevice",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "This login use a `multipart/form` and return a json response with bearer `plain_text_token` value."
+					},
+					"response": [
+						{
+							"name": "Login - Mobile Application (Token)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "loremi@email.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "device_name",
+											"value": "MyDevice",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/v1/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 18:27:14 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 18:27:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"plain_text_token\": \"1|4HSoTcSmVSwLLL1T1MnGtBHhh5ZjS1teZ0VwcJBE\"\n}"
+						}
+					]
+				}
+			],
+			"description": "To authenticate, add an `Authorization` header to your API requests that contains your **access_token**:"
+		},
+		{
+			"name": "Stories",
+			"item": [
+				{
+					"name": "List Stories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/stories/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories",
+								""
+							]
+						},
+						"description": "This request show **all exiting stories**. No authentication is needed."
+					},
+					"response": [
+						{
+							"name": "List Stories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 18:53:43 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 18:53:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.api+json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-1\",\n            \"attributes\": {\n                \"title\": \"Story 1\",\n                \"url\": \"story-1\",\n                \"content\": \"9woPyLiXQ8\"\n            },\n            \"links\": {\n                \"self\": \"http://127.0.0.1:8000/api/v1/stories/story-1\"\n            }\n        },\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-2\",\n            \"attributes\": {\n                \"title\": \"Story 2\",\n                \"url\": \"story-2\",\n                \"content\": \"ACkYdHsZ9P\"\n            },\n            \"links\": {\n                \"self\": \"http://127.0.0.1:8000/api/v1/stories/story-2\"\n            }\n        }\n    ],\n    \"links\": {\n        \"self\": \"http://127.0.0.1:8000/api/v1/stories\",\n        \"first\": \"http://127.0.0.1:8000/api/v1/stories?page%5Bnumber%5D=1\",\n        \"last\": \"http://127.0.0.1:8000/api/v1/stories?page%5Bnumber%5D=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"path\": \"http://127.0.0.1:8000/api/v1/stories\",\n        \"per_page\": 15,\n        \"to\": 2,\n        \"total\": 2\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Single Story",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/stories/story-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories",
+								"story-1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						},
+						"description": "This request show **a single exiting story,** it can be obtained using the **slug** of the stories. No authentication is needed."
+					},
+					"response": [
+						{
+							"name": "Single Story",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories/story-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories",
+										"story-1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 18:53:00 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 18:53:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.api+json"
+								},
+								{
+									"key": "Location",
+									"value": "http://127.0.0.1:8000/api/v1/stories/story-1"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"type\": \"stories\",\n        \"id\": \"story-1\",\n        \"attributes\": {\n            \"title\": \"Story 1\",\n            \"url\": \"story-1\",\n            \"content\": \"9woPyLiXQ8\"\n        },\n        \"links\": {\n            \"self\": \"http://127.0.0.1:8000/api/v1/stories/story-1\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Story",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type JSON:API}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"stories\",\r\n        \"attributes\": {\r\n            \"title\": \"Murder Still Alive\",\r\n            \"url\": \"murder-still-alive\",\r\n            \"content\": \"9woPyLiXQ8\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/stories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories"
+							]
+						},
+						"description": "This request allows to **store** a single story in the database. **Only authenticated users** can perform this task."
+					},
+					"response": [
+						{
+							"name": "Create Story",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\": {\r\n        \"type\": \"stories\",\r\n        \"attributes\": {\r\n            \"title\": \"Murder Still Alive\",\r\n            \"url\": \"murder-still-alive\",\r\n            \"content\": \"9woPyLiXQ8\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 03 Apr 2022 21:40:00 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 03 Apr 2022 21:40:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.api+json"
+								},
+								{
+									"key": "Location",
+									"value": "http://127.0.0.1:8000/api/v1/stories/murder-still-alive"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"type\": \"stories\",\n        \"id\": \"murder-still-alive\",\n        \"attributes\": {\n            \"title\": \"Murder Still Alive\",\n            \"url\": \"murder-still-alive\",\n            \"content\": \"9woPyLiXQ8\"\n        },\n        \"links\": {\n            \"self\": \"http://127.0.0.1:8000/api/v1/stories/murder-still-alive\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Story",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "{{Content-Type JSON:API}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"stories\",\r\n        \"id\": \"story-1\",\r\n        \"attributes\": {\r\n            \"title\": \"Story 1 UPDATED\",\r\n            \"url\": \"story-1\",\r\n            \"content\": \"Lorem Ipsum\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/stories/story-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories",
+								"story-1"
+							]
+						},
+						"description": "This request allows to **update** an exiting story in the database. **Only authenticated users** can perform this task."
+					},
+					"response": [
+						{
+							"name": "Update Story",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\": {\r\n        \"type\": \"stories\",\r\n        \"id\": \"story-1\",\r\n        \"attributes\": {\r\n            \"title\": \"Story 1 UPDATED\",\r\n            \"url\": \"story-1\",\r\n            \"content\": \"Lorem Ipsum\"\r\n        }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories/story-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories",
+										"story-1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 18:30:18 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 18:30:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.api+json"
+								},
+								{
+									"key": "Location",
+									"value": "http://localhost:8000/api/v1/stories/story-1"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"type\": \"stories\",\n        \"id\": \"story-1\",\n        \"attributes\": {\n            \"title\": \"Story 1 UPDATED\",\n            \"url\": \"story-1\",\n            \"content\": \"Lorem Ipsum\"\n        },\n        \"links\": {\n            \"self\": \"http://localhost:8000/api/v1/stories/story-1\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Story",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/stories/story-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories",
+								"story-1"
+							]
+						},
+						"description": "This request allows to **delete** a single story in the database. **Only authenticated users** can perform this task."
+					},
+					"response": [
+						{
+							"name": "Delete Story",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories/story-1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories",
+										"story-1"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 18:34:57 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 18:34:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Filter Stories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/stories?filter[title]=Story 2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories"
+							],
+							"query": [
+								{
+									"key": "filter[title]",
+									"value": "Story 2"
+								}
+							]
+						},
+						"description": "We can filter stories by a given attribute. Based on JSON:API Spec, we need to use the `filter` keyword, followed by the attribute to be filter and finally the value of the filter like below:\n\n> url/stories?**filter**\\[**title**\\]=**example title**\n\nNote that the attribute must be enclosure in square brackets (`[]`)."
+					},
+					"response": [
+						{
+							"name": "Filter Stories By Content",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories?filter[title]=Story 2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories"
+									],
+									"query": [
+										{
+											"key": "filter[title]",
+											"value": "Story 2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 19:44:58 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 19:44:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.api+json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-2\",\n            \"attributes\": {\n                \"title\": \"Story 2\",\n                \"url\": \"story-2\",\n                \"content\": \"OZOb1w1yDz\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-2\"\n            }\n        }\n    ],\n    \"links\": {\n        \"self\": \"http://localhost:8000/api/v1/stories\",\n        \"first\": \"http://localhost:8000/api/v1/stories?filter%5Btitle%5D=Story%202&page%5Bnumber%5D=1\",\n        \"last\": \"http://localhost:8000/api/v1/stories?filter%5Btitle%5D=Story%202&page%5Bnumber%5D=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"path\": \"http://localhost:8000/api/v1/stories\",\n        \"per_page\": 15,\n        \"to\": 1,\n        \"total\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Sort Stories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/stories?sort=-content",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-content"
+								}
+							]
+						},
+						"description": "We can sort stories by a given attribute. Based on JSON:API Spec, we need to use the `sort` keyword, followed by the attribute to be sorted like below:\n\n> url/stories?**sort**\\=(-)**example_attribute**\n\nNote that the attribute may prefixed within minus symbole (`-`) to sort resources descending, this is optional and resources is sorted ascending by default."
+					},
+					"response": [
+						{
+							"name": "Sort Stories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories?sort=-content",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-content"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 19:55:25 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 19:55:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.api+json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-5\",\n            \"attributes\": {\n                \"title\": \"Story 5\",\n                \"url\": \"story-5\",\n                \"content\": \"zacJzrEtMr\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-5\"\n            }\n        },\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-2\",\n            \"attributes\": {\n                \"title\": \"Story 2\",\n                \"url\": \"story-2\",\n                \"content\": \"RffpaecHCg\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-2\"\n            }\n        },\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-4\",\n            \"attributes\": {\n                \"title\": \"Story 4\",\n                \"url\": \"story-4\",\n                \"content\": \"CT5WdfRve7\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-4\"\n            }\n        },\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-3\",\n            \"attributes\": {\n                \"title\": \"Story 3\",\n                \"url\": \"story-3\",\n                \"content\": \"9vU6yTd04i\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-3\"\n            }\n        },\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-1\",\n            \"attributes\": {\n                \"title\": \"Story 1\",\n                \"url\": \"story-1\",\n                \"content\": \"2fB133u1zc\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-1\"\n            }\n        }\n    ],\n    \"links\": {\n        \"self\": \"http://localhost:8000/api/v1/stories\",\n        \"first\": \"http://localhost:8000/api/v1/stories?sort=-content&page%5Bnumber%5D=1\",\n        \"last\": \"http://localhost:8000/api/v1/stories?sort=-content&page%5Bnumber%5D=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"path\": \"http://localhost:8000/api/v1/stories\",\n        \"per_page\": 15,\n        \"to\": 5,\n        \"total\": 5\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Paginate Stories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/stories?page[size]=3&page[number]=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories"
+							],
+							"query": [
+								{
+									"key": "page[size]",
+									"value": "3"
+								},
+								{
+									"key": "page[number]",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Pagination is avaliable to stories. Based on JSON:API Spec, we need to use the `page` keyword, followed by the `size` keyword with the value of the page size, and finally the `page` keyword followed by the number keyword with the value of current page:\n\n> url/stories?`page`\\[`size`\\]=`page_size_value`&`page`\\[`number`\\]=`current_page_number`\""
+					},
+					"response": [
+						{
+							"name": "Paginate Stories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories?page[size]=3&page[number]=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories"
+									],
+									"query": [
+										{
+											"key": "page[size]",
+											"value": "3"
+										},
+										{
+											"key": "page[number]",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 19:49:19 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 19:49:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.api+json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-4\",\n            \"attributes\": {\n                \"title\": \"Story 4\",\n                \"url\": \"story-4\",\n                \"content\": \"CT5WdfRve7\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-4\"\n            }\n        },\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-5\",\n            \"attributes\": {\n                \"title\": \"Story 5\",\n                \"url\": \"story-5\",\n                \"content\": \"zacJzrEtMr\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-5\"\n            }\n        }\n    ],\n    \"links\": {\n        \"self\": \"http://localhost:8000/api/v1/stories\",\n        \"first\": \"http://localhost:8000/api/v1/stories?page%5Bsize%5D=3&page%5Bnumber%5D=1\",\n        \"last\": \"http://localhost:8000/api/v1/stories?page%5Bsize%5D=3&page%5Bnumber%5D=2\",\n        \"prev\": \"http://localhost:8000/api/v1/stories?page%5Bsize%5D=3&page%5Bnumber%5D=1\",\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 2,\n        \"from\": 4,\n        \"last_page\": 2,\n        \"path\": \"http://localhost:8000/api/v1/stories\",\n        \"per_page\": \"3\",\n        \"to\": 5,\n        \"total\": 5\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Paginate & Sort Stories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{Accept JSON:API}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/stories?sort=content&page[size]=3&page[number]=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stories"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "content"
+								},
+								{
+									"key": "page[size]",
+									"value": "3"
+								},
+								{
+									"key": "page[number]",
+									"value": "2"
+								}
+							]
+						},
+						"description": "We may use pagination, sort and filter together by separe each other with ampersand symbole (`&`) like below:\n\n> url/stories?sort=content`&`page\\[size\\]=3&page\\[number\\]=2"
+					},
+					"response": [
+						{
+							"name": "Paginate & Sort Stories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/stories?sort=content&page[size]=3&page[number]=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"stories"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "content"
+										},
+										{
+											"key": "page[size]",
+											"value": "3"
+										},
+										{
+											"key": "page[number]",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 20:04:05 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 Apr 2022 20:04:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.3.17"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "content-type",
+									"value": "application/vnd.api+json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-2\",\n            \"attributes\": {\n                \"title\": \"Story 2\",\n                \"url\": \"story-2\",\n                \"content\": \"RffpaecHCg\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-2\"\n            }\n        },\n        {\n            \"type\": \"stories\",\n            \"id\": \"story-5\",\n            \"attributes\": {\n                \"title\": \"Story 5\",\n                \"url\": \"story-5\",\n                \"content\": \"zacJzrEtMr\"\n            },\n            \"links\": {\n                \"self\": \"http://localhost:8000/api/v1/stories/story-5\"\n            }\n        }\n    ],\n    \"links\": {\n        \"self\": \"http://localhost:8000/api/v1/stories\",\n        \"first\": \"http://localhost:8000/api/v1/stories?sort=content&page%5Bsize%5D=3&page%5Bnumber%5D=1\",\n        \"last\": \"http://localhost:8000/api/v1/stories?sort=content&page%5Bsize%5D=3&page%5Bnumber%5D=2\",\n        \"prev\": \"http://localhost:8000/api/v1/stories?sort=content&page%5Bsize%5D=3&page%5Bnumber%5D=1\",\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 2,\n        \"from\": 4,\n        \"last_page\": 2,\n        \"path\": \"http://localhost:8000/api/v1/stories\",\n        \"per_page\": \"3\",\n        \"to\": 5,\n        \"total\": 5\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
