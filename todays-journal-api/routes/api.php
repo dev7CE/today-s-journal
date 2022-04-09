@@ -31,7 +31,8 @@ Route::get('stories', [StoryController::class, 'index'])
 Route::get('stories/{story}', [StoryController::class, 'show'])
     ->name('api.v1.stories.show');
 Route::patch('stories/{story}', [StoryController::class, 'update'])
-    ->name('api.v1.stories.update');
+    ->name('api.v1.stories.update')
+    ->middleware('auth:sanctum');;
 Route::post('stories', [StoryController::class, 'store'])
     ->name('api.v1.stories.store')
     ->middleware('auth');
