@@ -37,4 +37,5 @@ Route::post('stories', [StoryController::class, 'store'])
     ->name('api.v1.stories.store')
     ->middleware('auth');
 Route::delete('stories/{story}', [StoryController::class, 'destroy'])
-    ->name('api.v1.stories.destroy');
+    ->name('api.v1.stories.destroy')
+    ->middleware('auth:sanctum');;
