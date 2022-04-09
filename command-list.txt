@@ -58,3 +58,16 @@ Implement Sanctum Authentication Create
 -----------------------------------------------------------
 
 composer require laravel/sanctum
+
+=====================================
+Create Request
+-----------------------------------------------------------
+
+php artisan make:request [Name]Request
+
+=====================================
+Create Exception
+-----------------------------------------------------------
+
+php artisan make:exception [Name]Exception
+
