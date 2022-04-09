@@ -35,7 +35,7 @@ Route::patch('stories/{story}', [StoryController::class, 'update'])
     ->middleware('auth:sanctum');;
 Route::post('stories', [StoryController::class, 'store'])
     ->name('api.v1.stories.store')
-    ->middleware('auth');
+    ->middleware('auth:sanctum');
 Route::delete('stories/{story}', [StoryController::class, 'destroy'])
     ->name('api.v1.stories.destroy')
     ->middleware('auth:sanctum');;
